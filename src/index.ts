@@ -18,7 +18,7 @@ const loadGsplat = async (app: AppBase, config: Config, progressCallback: (progr
     const { contents, contentUrl, unified, aa } = config;
     const c = contents as unknown as ArrayBuffer;
     const filename = new URL(contentUrl, location.href).pathname.split('/').pop();
-    const data = filename.toLowerCase() === 'meta.json' ? await (await contents).json() : undefined;
+    const data = (filename.toLowerCase() === 'meta.json' || filename.toLowerCase().endsWith('lod-meta.json')) ? await (await contents).json() : undefined;
     const asset = new Asset(filename, 'gsplat', { url: contentUrl, filename, contents: c }, data);
 
     return new Promise<Entity>((resolve, reject) => {
